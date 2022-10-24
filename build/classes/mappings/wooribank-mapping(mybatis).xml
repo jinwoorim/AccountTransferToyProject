@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="WooriBank">
+	
+	<resultMap type="bank" id="wooriBankResult">
+		<id property="accountNumber"    column="ACCOUNT_NUMBER"/>
+		<result property="name"         column="NAME"/>
+		<result property="balance"      column="BALANCE"/>		
+		<result property="receiptDate"  column="RECEIPT_DATE"/>		
+		<result property="withdrawDate" column="WITHDRAW_DATE"/>		
+	</resultMap>
+	
+	<select id="getBalance" resultMap="wooriBankResult">
+	<![CDATA[
+		select * 
+		from woori_bank 
+		where account_number = #{accountNumber}
+	]]>
+	</select>	
+
+	<update id="updateAccount">
+	<![CDATA[
+		update woori_bank 
+		set balance = balance - #{transferMoney}, 
+		    withdraw_date = current_date
+		where account_number = #{accountNumber}
+	]]>
+	</update>	
+</mapper>
